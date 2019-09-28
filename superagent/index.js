@@ -39,7 +39,7 @@ async function getReply(word) { // 青云api，智能聊天机器人
   if(content.code===100000){
     return content.text
   }else {
-    return '您好~我现在暂时不在，这是自动回复消息。\n您有什么事可直接留言，我会尽快回复，么么哒😘'
+    return config.AutoReplyInGroup_Reply
   }
 }
 module.exports ={

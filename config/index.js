@@ -13,6 +13,7 @@ module.exports ={
 
   //高级功能配置项（非必填项）
   AUTOADDFRIEND:false,//自动加好友功能  默认关闭
+  AUTOADDFRIEND:false,//自动加好友功能  默认关闭
   AUTOADDROOM:false,//自动拉群功能 默认关闭
   AUTOREPLY:true,//自动聊天功能 默认关闭
   AIBOTAPI:'http://www.tuling123.com/openapi/api',//图灵机器人API 注册地址http://www.turingapi.com/
@@ -22,4 +23,12 @@ module.exports ={
   ADDROOMWORD:'/加群/',//自动发送群图片触发关键词(请只修改中文，不要删除符号，这是正则)
   ROOMCODEURL:'http://image.bloggeng.com/qun.png',//群二维码url链接(与本地群二维码路径选填一个)
   ROOMLOCALPATH:'./static/qun.png',//本地群二维码图片路径（与群url选填一个）
+
+
+  //群聊里艾特本人后的配置(非必填项）
+  AutoReplyInGroup:true,//是否自动回复
+  AutoReplyInGroup_key:"@空の境界",//是否自动回复
+  AutoReplyInGroup_Reply: "您好~我现在暂时不在，这是自动回复消息。\n您有什么事可直接私发给我，不用艾特我，我会尽快回复，么么哒😘",
+  AutoReplyInGroup_Img: "http://image.bloggeng.com/qun.png",
+  AutoReplyWhiteList: ["陈鑫", "玄鸟降."]
 }

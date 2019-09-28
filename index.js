@@ -43,6 +43,7 @@ async function onMessage (msg) {
   if (msg.self()) {
 	return
   }
+  const name = contact.name()
   if (type != 7) {
   	return //暂时只打印文本消息
 	  room.find()
@@ -50,11 +51,12 @@ async function onMessage (msg) {
   if(room){ // 如果是群消息
 	const topic = await room.topic()
     console.log(`群名: ${topic} 发消息人: ${contact.name()} 内容: ${content}`)
-	  if(content.indexOf("@空の境界") != -1) {
-	  	  let fromName = msg.from().name()
-		  let reply = "@"+ fromName + " 您好~我现在暂时不在，这是自动回复消息。\n您有什么事可直接私发给我，不用艾特我，我会尽快回复，么么哒😘"
+	  if(config.AutoReplyInGroup && content.indexOf(config.AutoReplyInGroup_key) != -1) {
+		  let reply_text = config.AutoReplyInGroup_Reply
+		  let reply_img = FileBox.fromUrl(config.AutoReplyInGroup_Img)
 		  try{
-			  await room.say(reply)
+			  await room.say(reply_text, contact)
+			  await room.say(reply_img)
 		  }catch (e) {
 			  console.error(e)
 		  }
@@ -87,8 +89,11 @@ async function onMessage (msg) {
 		}
 	  }
 	}else {
-	  if(config.AUTOREPLY){ // 如果开启自动聊天
-		let reply = await superagent.getReply(content)
+	  if(config.AUTOREPLY&&config.AutoReplyWhiteList.indexOf(name) != -1){ // 如果开启自动聊天
+		var reply = await superagent.getReply(content)
+		  if (reply == config.AutoReplyInGroup_Reply) {
+			  reply = getCustomReply(name)
+		  }
 		console.log('图灵机器人回复：',reply)
 		try{
 		  await contact.say(reply)
@@ -98,6 +103,13 @@ async function onMessage (msg) {
 	  }
 	}
   }
+}
+
+function getCustomReply(name) { // 青云api，智能聊天机器人
+	if(name == '玄鸟降.') {
+		return '你好，你聊天的对象正在玩游戏，这是自动回复消息,么么哒😘'
+	}
+	return config.AutoReplyInGroup_Reply
 }
 // 自动加好友功能
 async function onFriendShip(friendship) {
